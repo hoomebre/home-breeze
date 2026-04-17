@@ -1,0 +1,137 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+
+export function HeroSection() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [heroData, setHeroData] = useState({
+    image_url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80",
+    title: "Transform Your",
+    subtitle: "Bathroom Dreams",
+    button_text: "Shop Collection"
+  });
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      const { data } = await supabase.from('site_settings').select('value').eq('key', 'hero').single();
+      if (data?.value) {
+        setHeroData(data.value);
+      }
+    };
+    fetchHero();
+
+    if (!heroRef.current || !containerRef.current) return;
+
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      gsap.to(containerRef.current, {
+        y: scrolled * 0.4,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  return (
+    <section 
+      ref={heroRef} 
+      className="relative h-[100svh] min-h-[600px] flex items-center overflow-hidden bg-primary"
+    >
+      {/* Background Image & Overlay */}
+      <div 
+        ref={containerRef}
+        className="absolute inset-0 z-0 origin-center scale-105"
+      >
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{ backgroundImage: `url('${heroData.image_url}')` }} 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-primary/30 z-10" />
+      </div>
+
+      <div className="container relative z-20 mx-auto px-4 md:px-6 pt-20">
+        <motion.div 
+          className="max-w-3xl"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div variants={fadeInUp} className="mb-4">
+            <span className="inline-block px-4 py-1.5 border border-white/20 rounded-full text-white/90 text-sm font-medium tracking-wide bg-white/5 backdrop-blur-md">
+              Collection 2026
+            </span>
+          </motion.div>
+          
+          <motion.h1 
+            variants={fadeInUp}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] tracking-tight mb-6"
+          >
+            {heroData.title} <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">
+              {heroData.subtitle}
+            </span>
+          </motion.h1>
+
+          <motion.p 
+            variants={fadeInUp}
+            className="text-lg md:text-xl text-white/80 max-w-xl mb-10 leading-relaxed font-light"
+          >
+            Premium luxury products for your home, curated for those who value elegance and function.
+          </motion.p>
+
+          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
+            <Link 
+              href="/products" 
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-primary font-semibold rounded-lg hover:bg-yellow-400 transition-colors"
+            >
+              {heroData.button_text}
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <span className="text-white/60 text-xs tracking-widest uppercase">Scroll</span>
+        <div className="w-[1px] h-12 bg-white/20 overflow-hidden relative">
+          <motion.div 
+            animate={{ y: [0, 48] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+            className="w-full h-1/2 bg-accent absolute top-0"
+          />
+        </div>
+      </motion.div>
+    </section>
+  );
+}
