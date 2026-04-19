@@ -196,7 +196,7 @@ export default function AdminDiscountsPage() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label className="text-[13px] font-semibold text-gray-900">Discount Type</Label>
-                  <Select value={formData.type} onValueChange={val => setFormData({...formData, type: val || "percentage"})}>
+                  <Select value={formData.type} onValueChange={(val: string | null) => setFormData({...formData, type: val ?? "percentage"})}>
                     <SelectTrigger className="h-11 rounded-lg border-gray-200">
                       <SelectValue />
                     </SelectTrigger>
