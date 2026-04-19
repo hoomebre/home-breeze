@@ -312,7 +312,7 @@ export default function AdminProductsPage() {
                     <div className="grid grid-cols-2 gap-5">
                       <div className="space-y-2">
                         <Label className="text-[13px] font-semibold text-gray-900">Category</Label>
-                        <Select value={formData.category_id} onValueChange={val => setFormData({...formData, category_id: val})}>
+                        <Select value={formData.category_id} onValueChange={(val: string) => setFormData({...formData, category_id: val ?? ""})}>
                           <SelectTrigger className="h-11 rounded-lg border-gray-200"><SelectValue placeholder="Select Category" /></SelectTrigger>
                           <SelectContent>
                             {categories.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
