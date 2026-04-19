@@ -14,34 +14,39 @@ export default async function ProductsPage({
   const sort = typeof params.sort === "string" ? params.sort : "featured";
 
   // Build Supabase Query
-  let query = supabase
-    .from('products')
-    .select('*, categories!inner(slug), product_images(*)')
-    .eq('is_active', true)
-    .lte('price', maxPrice);
+  let mappedProducts: any[] = [];
+  try {
+    let query = supabase
+      .from('products')
+      .select('*, categories!inner(slug), product_images(*)')
+      .eq('is_active', true)
+      .lte('price', maxPrice);
 
-  if (categorySlug) {
-    query = query.eq('categories.slug', categorySlug);
+    if (categorySlug) {
+      query = query.eq('categories.slug', categorySlug);
+    }
+
+    // Sorting
+    if (sort === "price_asc") {
+      query = query.order('price', { ascending: true });
+    } else if (sort === "price_desc") {
+      query = query.order('price', { ascending: false });
+    } else if (sort === "newest") {
+      query = query.order('created_at', { ascending: false });
+    } else {
+      // featured
+      query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false });
+    }
+
+    const { data: productsData } = await query;
+    mappedProducts = (productsData || []).map(p => ({
+      ...p,
+      images: p.product_images || []
+    }));
+  } catch (err) {
+    console.error('Failed to fetch products:', err);
   }
 
-  // Sorting
-  if (sort === "price_asc") {
-    query = query.order('price', { ascending: true });
-  } else if (sort === "price_desc") {
-    query = query.order('price', { ascending: false });
-  } else if (sort === "newest") {
-    query = query.order('created_at', { ascending: false });
-  } else {
-    // featured
-    query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false });
-  }
-
-  const { data: productsData, error } = await query;
-
-  const mappedProducts = (productsData || []).map(p => ({
-    ...p,
-    images: p.product_images || []
-  }));
 
   return (
     <div className="bg-background min-h-screen">
