@@ -48,15 +48,15 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
+        className={`fixed z-50 transition-all duration-500 will-change-transform ${
           isTransparent
-            ? "bg-transparent text-white py-6"
-            : "bg-primary text-primary-foreground py-3 shadow-md border-b border-white/10"
+            ? "top-0 left-0 right-0 bg-gradient-to-b from-black/40 to-transparent text-white py-4 px-4 md:px-8"
+            : "top-3 left-3 right-3 md:top-5 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-[90%] md:max-w-6xl rounded-2xl bg-primary/95 backdrop-blur-xl text-primary-foreground py-3 px-5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] border border-white/10"
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <Link href="/" className="flex items-center gap-2 relative z-50">
-              <div className="relative h-16 w-16 md:h-20 md:w-20">
+              <div className={`relative transition-all duration-300 ${isTransparent ? 'h-14 w-14 md:h-16 md:w-16' : 'h-11 w-11 md:h-14 md:w-14'}`}>
                 <Image 
                   src={logoUrl || "/logo.png"} 
                   alt="Home Breeze" 
