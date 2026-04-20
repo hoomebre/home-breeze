@@ -281,7 +281,7 @@ export default function AdminProductsPage() {
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto p-0 border-0 shadow-2xl">
+        <DialogContent className="sm:max-w-5xl max-h-[95vh] overflow-y-auto p-0 border-0 shadow-2xl">
           <DialogHeader className="p-8 pb-4">
             <DialogTitle className="text-2xl font-serif font-bold">
               {editingProduct ? "Edit Product" : "New Product"}
