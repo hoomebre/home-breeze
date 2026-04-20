@@ -56,12 +56,12 @@ export function Header() {
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 relative z-50">
-              <div className="relative h-14 w-60 md:h-16 md:w-72">
+              <div className="relative h-14 w-14 md:h-16 md:w-16">
                 <Image 
                   src={logoUrl || "/logo.png"} 
                   alt="Home Breeze" 
                   fill 
-                  className="object-contain object-left scale-110" 
+                  className="object-contain" 
                   priority
                 />
               </div>

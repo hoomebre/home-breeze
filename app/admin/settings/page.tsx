@@ -104,10 +104,10 @@ export default function AdminSettingsPage() {
         </div>
         <div className="p-8 max-w-sm">
           <ImageUpload 
-            label="Site Logo (Horizontal)"
+            label="Site Logo (Square)"
             value={settings.logo.url}
-            aspectRatio={3/1} 
-            recommendedSize="400 x 133 px"
+            aspectRatio={1/1} 
+            recommendedSize="500 x 500 px"
             onChange={(url) => setSettings({ ...settings, logo: { ...settings.logo, url } })}
             onRemove={() => setSettings({ ...settings, logo: { ...settings.logo, url: "" } })}
           />
