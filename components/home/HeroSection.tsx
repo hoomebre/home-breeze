@@ -71,7 +71,7 @@ export function HeroSection() {
   return (
     <section 
       ref={heroRef} 
-      className="relative h-[100svh] min-h-[600px] flex items-center overflow-hidden bg-primary"
+      className="relative min-h-[100dvh] flex items-center overflow-hidden bg-primary"
     >
       {/* Background Image & Overlay */}
       <div 
