@@ -36,6 +36,10 @@ export function HeroSection() {
     if (!heroRef.current || !containerRef.current) return;
 
     const handleScroll = () => {
+      // Disable parallax on mobile phones where smooth scrolling breaks JS transforms
+      // Also ignore negative scroll values (rubber banding on iOS)
+      if (window.innerWidth < 768 || window.scrollY < 0) return;
+
       const scrolled = window.scrollY;
       gsap.to(containerRef.current, {
         y: scrolled * 0.4,
