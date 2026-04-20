@@ -10,8 +10,9 @@ import { supabase } from "@/lib/supabase";
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [heroData, setHeroData] = useState({
-    image_url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80",
+    image_url: "",
     title: "Transform Your",
     subtitle: "Bathroom Dreams",
     button_text: "Shop Collection"
@@ -19,9 +20,15 @@ export function HeroSection() {
 
   useEffect(() => {
     const fetchHero = async () => {
-      const { data } = await supabase.from('site_settings').select('value').eq('key', 'hero').single();
-      if (data?.value) {
-        setHeroData(data.value);
+      try {
+        const { data } = await supabase.from('site_settings').select('value').eq('key', 'hero').single();
+        if (data?.value) {
+          setHeroData(data.value);
+        }
+      } catch (_) {
+        // keep defaults if fetch fails
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchHero();
@@ -68,9 +75,13 @@ export function HeroSection() {
         className="absolute inset-0 z-0 origin-center scale-105"
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
+        {/* Only render the background image after data is loaded to prevent demo image flash */}
         <div 
-          className="absolute inset-0 bg-cover bg-center" 
-          style={{ backgroundImage: `url('${heroData.image_url}')` }} 
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+          style={{ 
+            backgroundImage: heroData.image_url ? `url('${heroData.image_url}')` : 'none',
+            opacity: isLoading ? 0 : 1
+          }} 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-primary/30 z-10" />
       </div>
