@@ -32,7 +32,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand & About */}
           <div className="space-y-6">
-            <Link href="/" className="inline-block relative h-14 w-14 -ml-1">
+            <Link href="/" className="inline-block relative h-20 w-20 -ml-1">
               <Image 
                 src={logoUrl || "/logo.png"} 
                 alt="Home Breeze" 

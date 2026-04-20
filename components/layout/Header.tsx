@@ -56,7 +56,7 @@ export function Header() {
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 relative z-50">
-              <div className="relative h-14 w-14 md:h-16 md:w-16">
+              <div className="relative h-16 w-16 md:h-20 md:w-20">
                 <Image 
                   src={logoUrl || "/logo.png"} 
                   alt="Home Breeze" 
