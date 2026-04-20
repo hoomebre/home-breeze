@@ -44,7 +44,7 @@ export default async function ProductDetailPage({
   }));
 
   return (
-    <div className="bg-background min-h-screen pt-24 pb-16">
+    <div className="bg-background min-h-screen pt-32 pb-16">
       <div className="container mx-auto px-4 md:px-6">
         
         {/* Breadcrumbs */}

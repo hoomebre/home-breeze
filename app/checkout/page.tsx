@@ -116,7 +116,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] pt-24 pb-16">
+    <div className="min-h-screen bg-[#f8f9fa] pt-32 pb-16">
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
         <h1 className="font-serif text-3xl md:text-4xl font-semibold mb-8 text-center md:text-left">
           Secure Checkout

@@ -51,7 +51,7 @@ export default async function ProductsPage({
   return (
     <div className="bg-background min-h-screen">
       {/* Header spacer */}
-      <div className="bg-primary pt-20 pb-12 px-4 text-center">
+      <div className="bg-primary pt-32 pb-12 px-4 text-center">
         <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary-foreground mb-4">
           All Products
         </h1>

@@ -16,7 +16,6 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const links = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
-    { name: "Categories", href: "/categories" },
     { name: "Discounts", href: "/discounts" },
     { name: "About Us", href: "/about" },
   ];
