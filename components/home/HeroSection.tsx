@@ -36,15 +36,17 @@ export function HeroSection() {
     if (!heroRef.current || !containerRef.current) return;
 
     const handleScroll = () => {
-      // Disable parallax on mobile phones where smooth scrolling breaks JS transforms
-      // Also ignore negative scroll values (rubber banding on iOS)
-      if (window.innerWidth < 768 || window.scrollY < 0) return;
+      // Robust touch device check - mobile browsers cannot handle JS parallax smoothly
+      const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      
+      // Disable parallax completely on touch devices or rubber-band negative scrolling
+      if (isTouchDevice || window.innerWidth < 1024 || window.scrollY < 0) return;
 
       const scrolled = window.scrollY;
       gsap.to(containerRef.current, {
-        y: scrolled * 0.4,
-        duration: 0.5,
-        ease: "power2.out",
+        y: scrolled * 0.3,
+        duration: 0.1,
+        ease: "none",
       });
     };
 
@@ -73,15 +75,14 @@ export function HeroSection() {
       ref={heroRef} 
       className="relative min-h-[100dvh] flex items-center overflow-hidden bg-primary"
     >
-      {/* Background Image & Overlay */}
       <div 
         ref={containerRef}
-        className="absolute inset-0 z-0 origin-center scale-105"
+        className="absolute inset-x-0 -top-[30vh] -bottom-[30vh] z-0 origin-center"
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
         {/* Only render the background image after data is loaded to prevent demo image flash */}
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+          className="absolute inset-0 bg-cover transition-opacity duration-700 bg-[center_top]"
           style={{ 
             backgroundImage: heroData.image_url ? `url('${heroData.image_url}')` : 'none',
             opacity: isLoading ? 0 : 1
