@@ -33,7 +33,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${playfair.variable} h-full scroll-smooth antialiased overflow-x-hidden`}
     >
-      <body className="min-h-screen min-h-[100dvh] flex flex-col font-sans selection:bg-blue-600 selection:text-white pt-[76px] lg:pt-0 overflow-x-hidden">
+      <body className="min-h-screen min-h-[100dvh] flex flex-col font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
         <LayoutWrapper>
           <PageTransition>
             <main className="flex-1 flex flex-col w-full">{children}</main>
