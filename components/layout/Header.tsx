@@ -58,7 +58,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2 relative z-50">
               <div className="relative h-14 w-60 md:h-16 md:w-72">
                 <Image 
-                  src="/logo.png" 
+                  src={logoUrl || "/logo.png"} 
                   alt="Home Breeze" 
                   fill 
                   className="object-contain object-left scale-110" 

@@ -12,15 +12,18 @@ export function Footer() {
     phone: "+92 300 1234567",
     email: "hello@homebreeze.com"
   });
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchContact = async () => {
-      const { data } = await supabase.from('site_settings').select('value').eq('key', 'contact').single();
-      if (data?.value) {
-        setContact(data.value);
-      }
+    const fetchSettings = async () => {
+      const [contactRes, logoRes] = await Promise.all([
+        supabase.from('site_settings').select('value').eq('key', 'contact').single(),
+        supabase.from('site_settings').select('value').eq('key', 'logo').single(),
+      ]);
+      if (contactRes.data?.value) setContact(contactRes.data.value);
+      if (logoRes.data?.value?.url) setLogoUrl(logoRes.data.value.url);
     };
-    fetchContact();
+    fetchSettings();
   }, []);
 
   return (
@@ -31,7 +34,7 @@ export function Footer() {
           <div className="space-y-6">
             <Link href="/" className="inline-block relative h-12 w-48 -ml-1">
               <Image 
-                src="/logo.png" 
+                src={logoUrl || "/logo.png"} 
                 alt="Home Breeze" 
                 fill 
                 className="object-contain object-left scale-110 brightness-0 invert" 
